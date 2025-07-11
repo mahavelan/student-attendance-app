@@ -1,7 +1,7 @@
-# Use official Python image with Debian
+# Use official Python image (based on Debian Slim)
 FROM python:3.10-slim
 
-# Install system dependencies for face_recognition and dlib
+# Install system-level dependencies required for face_recognition and dlib
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -12,20 +12,20 @@ RUN apt-get update && apt-get install -y \
     libboost-python-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy requirements
+# Copy Python dependencies file first (for caching layer)
 COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy app code
+# Copy the rest of the codebase into the container
 COPY . .
 
-# Expose FastAPI port
+# Expose FastAPI default port
 EXPOSE 8000
 
-# Start the FastAPI app
+# Run the FastAPI application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

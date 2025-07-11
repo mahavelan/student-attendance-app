@@ -1,5 +1,4 @@
-fastapi
-uvicorn
-python-multipart
-face_recognition
+gradio==4.27.0
+opencv-python
+numpy
 pandas

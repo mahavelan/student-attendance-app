@@ -1,8 +1,29 @@
+# Ignore Python cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Ignore local databases and virtual environments
 *.db
 *.sqlite3
 .env
 venv/
+env/
+
+# Ignore system/IDE clutter
+.DS_Store
+.vscode/
+.idea/
+
+# Ignore node_modules (frontend side)
+node_modules/
+dist/
+build/
+
+# Ignore Git history (not needed inside image)
+.git
+.gitignore
+
+# Ignore Docker ignore file itself (optional)
+.dockerignore

@@ -3,29 +3,33 @@
 import face_recognition
 import os
 
-def recognize_faces(batch, uploaded_path):
+def recognize_faces(batch, input_image_path):
+    input_image = face_recognition.load_image_file(input_image_path)
+    input_encodings = face_recognition.face_encodings(input_image)
+
+    if not input_encodings:
+        return []
+
+    input_encoding = input_encodings[0]
+
     known_encodings = []
     known_names = []
 
-    folder = f"faces/{batch}"
-    if not os.path.exists(folder):
+    batch_path = f"frontend/data/faces/{batch}"
+    if not os.path.exists(batch_path):
         return []
 
-    for img_file in os.listdir(folder):
-        path = os.path.join(folder, img_file)
-        img = face_recognition.load_image_file(path)
-        enc = face_recognition.face_encodings(img)
-        if enc:
-            known_encodings.append(enc[0])
-            known_names.append(img_file.replace(".jpg", ""))
+    for filename in os.listdir(batch_path):
+        if filename.endswith(".jpg"):
+            reg_no = filename.split(".")[0]
+            image_path = os.path.join(batch_path, filename)
+            image = face_recognition.load_image_file(image_path)
+            encodings = face_recognition.face_encodings(image)
+            if encodings:
+                known_encodings.append(encodings[0])
+                known_names.append(reg_no)
 
-    uploaded_img = face_recognition.load_image_file(uploaded_path)
-    upload_encodings = face_recognition.face_encodings(uploaded_img)
+    matches = face_recognition.compare_faces(known_encodings, input_encoding)
+    matched_names = [name for match, name in zip(matches, known_names) if match]
 
-    recognized = set()
-    for enc in upload_encodings:
-        matches = face_recognition.compare_faces(known_encodings, enc, tolerance=0.5)
-        if True in matches:
-            idx = matches.index(True)
-            recognized.add(known_names[idx])
-    return list(recognized)
+    return matched_names

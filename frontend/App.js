@@ -3,12 +3,11 @@ import CameraCapture from "./CameraCapture";
 
 function App() {
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>📸 Student Attendance Camera App</h1>
+    <div style={{ textAlign: "center", marginTop: "2rem" }}>
+      <h1>📸 Face Attendance Scanner</h1>
       <CameraCapture />
     </div>
   );
 }
 
 export default App;
-

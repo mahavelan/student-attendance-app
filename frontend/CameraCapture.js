@@ -1,24 +1,24 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
-function CameraCapture() {
+const CameraCapture = () => {
   const videoRef = useRef(null);
 
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream;
-    } catch (err) {
-      alert("Camera access denied or not available.");
-    }
-  };
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        videoRef.current.srcObject = stream;
+      })
+      .catch((err) => {
+        console.error("Camera error:", err);
+      });
+  }, []);
 
   return (
     <div>
-      <video ref={videoRef} width="400" height="300" autoPlay style={{ border: "2px solid #ccc" }} />
-      <br />
-      <button onClick={startCamera} style={{ marginTop: "1rem" }}>Start Camera</button>
+      <video ref={videoRef} autoPlay width="400" height="300" />
     </div>
   );
-}
+};
 
 export default CameraCapture;

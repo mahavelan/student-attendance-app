@@ -10,5 +10,12 @@ def save_attendance(batch, present_list):
 
     today = datetime.now().strftime("%Y-%m-%d")
     path = f"{folder}/{today}.csv"
-    df = pd.DataFrame({"Register No": present_list, "Status": "Present"})
+
+    df = pd.DataFrame({
+        "Register No": present_list,
+        "Status": ["Present"] * len(present_list)
+    })
+    
     df.to_csv(path, index=False)
+    print(f"✅ Attendance saved to {path} with {len(present_list)} students.")
+    return {"status": "success", "saved_file": path, "count": len(present_list)}

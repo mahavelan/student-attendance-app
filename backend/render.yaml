@@ -5,3 +5,6 @@ services:
     region: oregon
     plan: free
     autoDeploy: true
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    healthCheckPath: /docs

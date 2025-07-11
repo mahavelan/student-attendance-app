@@ -1,4 +1,7 @@
-gradio==4.27.0
-opencv-python
+fastapi
+uvicorn
 numpy
+opencv-python-headless
+face_recognition
+python-multipart
 pandas

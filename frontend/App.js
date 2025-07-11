@@ -3,8 +3,8 @@ import CameraCapture from "./CameraCapture";
 
 function App() {
   return (
-    <div style={{ textAlign: "center", marginTop: "2rem" }}>
-      <h1>📸 Face Attendance Scanner</h1>
+    <div>
+      <h1>📸 Face Attendance App</h1>
       <CameraCapture />
     </div>
   );
